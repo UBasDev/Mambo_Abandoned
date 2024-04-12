@@ -6,6 +6,7 @@ type ApplicationConfig struct {
 type appSettings struct {
 	Server                    server                    `json:"Server"`
 	DatabaseConnectionStrings databaseConnectionStrings `json:"DatabaseConnectionStrings"`
+	LogFilePath               string                    `json:"LogFilePath"`
 }
 type server struct {
 	Host              string `json:"Host"`

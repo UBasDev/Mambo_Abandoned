@@ -12,11 +12,11 @@ import (
 	"gorm.io/gorm/schema"
 )
 
-func InitPostgreSqlDatabaseContext(postgreSqlDbUrl string, environment string) *gorm.DB {
+func InitPostgreSqlDatabaseContext(postgreSqlDbUrl string, environment enums.Environment) (*gorm.DB, error) {
 	isParameterizedQueriesActive := true
 	logLevel := logger.Error
 	isLogColorful := false
-	if environment == string(enums.Development) || environment == string(enums.Staging) {
+	if environment != enums.ProductionEnvironment { //So if it is NOT production environment
 		isParameterizedQueriesActive = false
 		logLevel = logger.Info
 		isLogColorful = true
@@ -46,10 +46,10 @@ func InitPostgreSqlDatabaseContext(postgreSqlDbUrl string, environment string) *
 		DisableAutomaticPing: false,
 	})
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	//dB.AutoMigrate(&entities.RoleEntity{}, &entities.ScreenEntity{}, &entities.CompanyEntity{})
 	//dB.AutoMigrate(&entities.UserEntity{}, &entities.ProfileEntity{})
 
-	return dB
+	return dB, nil
 }
