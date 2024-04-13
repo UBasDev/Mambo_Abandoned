@@ -1,6 +1,6 @@
 package models
 
-type ApplicationConfig struct {
+type ApplicationConfigModel struct {
 	AppSettings appSettings `json:"AppSettings"`
 }
 type appSettings struct {
