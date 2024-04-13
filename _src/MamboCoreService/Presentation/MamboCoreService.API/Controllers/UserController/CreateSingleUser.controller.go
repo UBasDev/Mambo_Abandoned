@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
-	models "github.com/UBasDev/Mambo/_src/MamboCoreService/Core/MamboCoreService.Application/Models"
 	requestmodels "github.com/UBasDev/Mambo/_src/MamboCoreService/Core/MamboCoreService.Application/RequestModels"
 	entities "github.com/UBasDev/Mambo/_src/MamboCoreService/Core/MamboCoreService.Domain/Entities"
+	middlewares "github.com/UBasDev/Mambo/_src/_helpers/Middlewares"
 	responses "github.com/UBasDev/Mambo/_src/_helpers/Responses"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -27,9 +27,9 @@ func BuildSingleUserController(postgreSqlDbContext *gorm.DB) ICreateSingleUserCo
 	}
 }
 func (createSingleUserControllerModel CreateSingleUserControllerModel) ServeHTTP(rw http.ResponseWriter, rq *http.Request) {
-	logContext, _ := rq.Context().Value(models.ZapLogger{}).(*zap.Logger)
+	logContext, _ := rq.Context().Value(middlewares.ZapLogger{}).(*zap.Logger)
 	response := responses.CreateNewBaseResponse()
-	traceId, ok := rq.Context().Value(models.TraceIdKey{}).(string)
+	traceId, ok := rq.Context().Value(middlewares.TraceIdKey{}).(string)
 	if !ok {
 		logContext.Error("TraceId couldn't be generated")
 		responses.GenerateErrorResponse(rw, response, "", "TraceId couldn't be generated", http.StatusInternalServerError)

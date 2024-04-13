@@ -10,7 +10,7 @@ import (
 	enums "github.com/UBasDev/Mambo/_src/MamboCoreService/Core/MamboCoreService.Application/Enums"
 )
 
-func ConfigFileRead[T comparable](environment enums.Environment, channel chan<- T, wg *sync.WaitGroup) {
+func ConfigFileRead[T comparable](environment enums.Environment, applicationConfigChannel chan<- T, errorChannel chan<- error, wg *sync.WaitGroup) {
 	defer wg.Done()
 	currentWorkingDirectory, err := os.Getwd()
 	if err != nil {
@@ -24,8 +24,9 @@ func ConfigFileRead[T comparable](environment enums.Environment, channel chan<- 
 
 	var deserializedConfigFileData T
 	if err := json.NewDecoder(foundConfigFile).Decode(&deserializedConfigFileData); err != nil {
-		panic(err)
+		errorChannel <- err
 	}
-	channel <- deserializedConfigFileData
-	close(channel)
+	applicationConfigChannel <- deserializedConfigFileData
+	close(applicationConfigChannel)
+	close(errorChannel)
 }
