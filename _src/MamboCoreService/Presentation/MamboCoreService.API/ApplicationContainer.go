@@ -1,4 +1,4 @@
-package models
+package main
 
 import (
 	"net/http"
@@ -21,7 +21,7 @@ type applicationContainerModel struct {
 	Server              http.Server
 }
 
-func CreateNewApplicationContainerModel(apiAdress string, readTimout uint16, readHeaderTimeout uint16, writeTimeout uint16, idleTimeout uint16, environment enums.Environment) applicationContainerModel {
+func createNewApplicationContainerModel(apiAdress string, readTimout uint16, readHeaderTimeout uint16, writeTimeout uint16, idleTimeout uint16, environment enums.Environment) applicationContainerModel {
 	return applicationContainerModel{
 		ApiAdress:         apiAdress,
 		ReadTimout:        readTimout,
