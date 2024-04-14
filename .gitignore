@@ -126,4 +126,4 @@ aio/content/examples/.DS_Store
 .angular/
 
 #docker-compose
-compose/
+*compose/
